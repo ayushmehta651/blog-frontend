@@ -48,11 +48,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/p1.png
-    - assets/images/p2.png
     - assets/images/p3.png
-    - assets/images/p4.png
-    - assets/images/p5.png
-    - assets/images/home_banner.png
   uses-material-design: true
   fonts:
     - family: Montserrat
