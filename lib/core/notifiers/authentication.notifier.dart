@@ -11,6 +11,9 @@ class AuthenticationNotifier extends ChangeNotifier {
   final AuthenticationAPI _authenticationAPI = new AuthenticationAPI();
   final CacheService _cacheService = new CacheService();
 
+  late String _username = "";
+  String get username => _username;
+
   Future createAccount(
       {required BuildContext context,
       required String useremail,
@@ -25,7 +28,7 @@ class AuthenticationNotifier extends ChangeNotifier {
           .then((value) async {
         final Map<String, dynamic> parsedData =
             await jsonDecode(value.toString());
-        print(parsedData);
+        print(parsedData["username"]);
         bool isAuthenticated = parsedData['authentication'];
         dynamic userData = parsedData['data'];
         if (isAuthenticated) {
@@ -58,6 +61,8 @@ class AuthenticationNotifier extends ChangeNotifier {
         print(parsedData);
         bool isAuthenticated = parsedData['authentication'];
         dynamic userData = parsedData['data'];
+        _username = parsedData["username"]["username"];
+        print(_username);
         if (isAuthenticated) {
           _cacheService
               .writeCache(key: "jwtdata", value: userData)
@@ -69,6 +74,7 @@ class AuthenticationNotifier extends ChangeNotifier {
               backgroundColor: CustomColors.bgColor,
               content: Text(userData, style: CustomTextStyle.bodyText1)));
         }
+        notifyListeners();
       });
     } on SocketException {} catch (error) {
       print(error);

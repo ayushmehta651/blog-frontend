@@ -6,7 +6,6 @@ List<SingleChildWidget> providers = [...remoteproviders, ...localproviders];
 
 List<SingleChildWidget> remoteproviders = [
   ChangeNotifierProvider(create: (_) => AuthenticationNotifier()),
-
 ];
 
 List<SingleChildWidget> localproviders = [];
