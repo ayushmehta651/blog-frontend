@@ -46,9 +46,15 @@ class LoginView extends StatelessWidget {
             Text("Welcome back.", style: CustomTextStyle.heading2),
             Text("You've been missed!", style: CustomTextStyle.heading2),
             vSizedBox4,
-            CustomWidgets.stylishTextField("Email", emailController),
+            customTextField(
+                hintText: "Enter email address",
+                width: 400,
+                textEditingController: emailController),
             vSizedBox1,
-            CustomWidgets.stylishTextField("Password", passwordController),
+            customTextField(
+                hintText: "Enter password",
+                width: 400,
+                textEditingController: passwordController),
             vSizedBox4,
             Container(
               child: Center(

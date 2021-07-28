@@ -49,11 +49,20 @@ class SignupView extends StatelessWidget {
             Text("Welcome to Blog App!", style: CustomTextStyle.heading2),
             Text("Fill in your details.", style: CustomTextStyle.heading2),
             vSizedBox3,
-            CustomWidgets.stylishTextField("Username", nameController),
+            customTextField(
+                hintText: "Enter username",
+                width: 400,
+                textEditingController: nameController),
             vSizedBox1,
-            CustomWidgets.stylishTextField("Email", emailController),
+            customTextField(
+                hintText: "Enter email address",
+                width: 400,
+                textEditingController: emailController),
             vSizedBox1,
-            CustomWidgets.stylishTextField("Password", passwordController),
+            customTextField(
+                hintText: "Enter password",
+                width: 400,
+                textEditingController: passwordController),
             vSizedBox4,
             Container(
               child: Center(

@@ -11,8 +11,38 @@ class AuthenticationNotifier extends ChangeNotifier {
   final AuthenticationAPI _authenticationAPI = new AuthenticationAPI();
   final CacheService _cacheService = new CacheService();
 
-  late String _username = "";
+  String _username = "";
   String get username => _username;
+  List<dynamic> _usernames = [];
+  List<dynamic> get usernames => _usernames;
+
+  Future getAllUsernames() async {
+    try {
+      _authenticationAPI.getAllUsernames().then((value) async {
+        final List<dynamic> parsedData = value;
+        _usernames = parsedData;
+        notifyListeners();
+      });
+    } on SocketException {} catch (error) {
+      print(error);
+      return null;
+    }
+  }
+
+  Future getUserDetails() async {
+    try {
+      await _authenticationAPI.getUserDetails().then((value) async {
+        final Map<String, dynamic> parsedData =
+            await jsonDecode(value.toString());
+        _username = parsedData['confidentialData']['username'];
+        // print(parsedData);
+        _cacheService.writeCache(key: "username", value: _username);
+        notifyListeners();
+      });
+    } on SocketException {} catch (error) {
+      print(error);
+    }
+  }
 
   Future createAccount(
       {required BuildContext context,
@@ -28,7 +58,7 @@ class AuthenticationNotifier extends ChangeNotifier {
           .then((value) async {
         final Map<String, dynamic> parsedData =
             await jsonDecode(value.toString());
-        print(parsedData["username"]);
+        //print(parsedData["username"]);
         bool isAuthenticated = parsedData['authentication'];
         dynamic userData = parsedData['data'];
         if (isAuthenticated) {
@@ -58,12 +88,12 @@ class AuthenticationNotifier extends ChangeNotifier {
           .then((value) async {
         final Map<String, dynamic> parsedData =
             await jsonDecode(value.toString());
-        print(parsedData);
+        // print(parsedData);
         bool isAuthenticated = parsedData['authentication'];
         dynamic userData = parsedData['data'];
-        _username = parsedData["username"]["username"];
-        print(_username);
+        //print(username);
         if (isAuthenticated) {
+          // _cacheService.writeCache(key: "username", value: _username);
           _cacheService
               .writeCache(key: "jwtdata", value: userData)
               .whenComplete(() {
@@ -74,8 +104,8 @@ class AuthenticationNotifier extends ChangeNotifier {
               backgroundColor: CustomColors.bgColor,
               content: Text(userData, style: CustomTextStyle.bodyText1)));
         }
-        notifyListeners();
       });
+      notifyListeners();
     } on SocketException {} catch (error) {
       print(error);
     }
