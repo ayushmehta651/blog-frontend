@@ -75,21 +75,32 @@ class _HomeViewState extends State<HomeView> {
                   itemCount: posts.length,
                   itemBuilder: (context, index) {
                     return posts[index]['post'].length != 0
-                        ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                      
-                                ListTile(
-                                    tileColor: Colors.blueGrey,
-                                    title:
-                                        Text(posts[index]['post'][0]['title']),
-                                    subtitle:
-                                        Text(posts[index]['post'][0]['blog']),
-                                    trailing: Text(posts[index]['name'])),
-                              ],
-                            ),
-                          )
+                        ? Column(
+                          children: [
+                            Container(
+                                width: screenwidth,
+                                child: posts[index]['post'].length != 0
+                                    ? ListView.builder(
+                                      shrinkWrap: true,
+                                        itemCount:
+                                            posts[index]['post'].length,
+                                        itemBuilder: (context, ind) {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: ListTile(
+                                                tileColor: Colors.blueGrey,
+                                                title: Text(posts[index]
+                                                    ['post'][ind]['title']),
+                                                subtitle: Text(posts[index]
+                                                    ['post'][ind]['blog']),
+                                                trailing: Text(
+                                                    posts[index]['name'])),
+                                          );
+                                        })
+                                    : Center(
+                                        child: CircularProgressIndicator()))
+                          ],
+                        )
                         : Container();
                   })
               : Center(child: CircularProgressIndicator())),

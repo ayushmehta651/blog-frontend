@@ -22,6 +22,8 @@ class BlogNotifier extends ChangeNotifier {
         _received = parsedData['received'];
         _posts = parsedData['data'];
 
+        // print(_posts);
+
         if (_received) {
           notifyListeners();
         } else {

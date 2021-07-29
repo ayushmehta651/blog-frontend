@@ -43,6 +43,9 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
+    double screenwidth = MediaQuery.of(context).size.width;
+    double screenheight = MediaQuery.of(context).size.height;
+
     _authenticationNotifier =
         Provider.of<AuthenticationNotifier>(context, listen: true);
     _followerNotifier = Provider.of<FollowerNotifier>(context, listen: true);
@@ -81,7 +84,10 @@ class _ProfileViewState extends State<ProfileView> {
 
     return Scaffold(
         body: Padding(
-            padding: const EdgeInsets.all(80.0),
+          padding: const EdgeInsets.all(40.0),
+          child: Container(
+            width: screenwidth,
+            height: screenheight,
             child: Card(
               elevation: 10.0,
               child: Column(children: [
@@ -97,7 +103,7 @@ class _ProfileViewState extends State<ProfileView> {
                             style: TextStyle(
                                 decoration: TextDecoration.underline,
                                 color: CustomColors.yellowColor,
-                                fontSize: 17,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: CustomFonts.MONTSERRAT),
                           ),
@@ -107,7 +113,7 @@ class _ProfileViewState extends State<ProfileView> {
                               username,
                               style: TextStyle(
                                   color: Colors.blue,
-                                  fontSize: 17,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: CustomFonts.MONTSERRAT),
                             ),
@@ -121,7 +127,7 @@ class _ProfileViewState extends State<ProfileView> {
                             style: TextStyle(
                                 decoration: TextDecoration.underline,
                                 color: CustomColors.yellowColor,
-                                fontSize: 17,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: CustomFonts.MONTSERRAT),
                           ),
@@ -131,7 +137,7 @@ class _ProfileViewState extends State<ProfileView> {
                               cntFollower,
                               style: TextStyle(
                                   color: Colors.blue,
-                                  fontSize: 17,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: CustomFonts.MONTSERRAT),
                             ),
@@ -145,7 +151,7 @@ class _ProfileViewState extends State<ProfileView> {
                             style: TextStyle(
                                 decoration: TextDecoration.underline,
                                 color: CustomColors.yellowColor,
-                                fontSize: 17,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: CustomFonts.MONTSERRAT),
                           ),
@@ -155,7 +161,7 @@ class _ProfileViewState extends State<ProfileView> {
                               cntFollowing,
                               style: TextStyle(
                                   color: Colors.blue,
-                                  fontSize: 17,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: CustomFonts.MONTSERRAT),
                             ),
@@ -183,18 +189,19 @@ class _ProfileViewState extends State<ProfileView> {
                             ),
                           ),
                           Container(
-                              width: 500,
-                              height: 400.0,
+                              width: screenwidth * 0.5,
+                              height: screenheight * 0.5,
                               child: _usernames.length != 0
                                   ? ListView.builder(
                                       itemCount: _usernames.length,
                                       itemBuilder: (context, index) {
-                                        return _usernames[index]['username'] ==
+                                        return _usernames[index]
+                                                    ['username'] ==
                                                 username
                                             ? Container()
                                             : Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10.0),
+                                                padding: const EdgeInsets.all(
+                                                    8.0),
                                                 child: ListTile(
                                                     tileColor: Colors.black,
                                                     leading: Text(
@@ -203,19 +210,23 @@ class _ProfileViewState extends State<ProfileView> {
                                                             .toString()),
                                                     trailing: TextButton(
                                                         onPressed: () => _add(
-                                                            _usernames[index]
-                                                                    ['username']
+                                                            _usernames[index][
+                                                                    'username']
                                                                 .toString()),
-                                                        child: Text("FOLLOW"))),
+                                                        child:
+                                                            Text("FOLLOW"))),
                                               );
                                       })
-                                  : Center(child: CircularProgressIndicator())),
+                                  : Center(
+                                      child: CircularProgressIndicator())),
                         ],
                       ),
                     ),
                   ],
                 ),
               ]),
-            )));
+            ),
+          ),
+        ));
   }
 }

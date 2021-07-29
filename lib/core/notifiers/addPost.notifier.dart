@@ -33,7 +33,7 @@ class AddNotifier extends ChangeNotifier {
 
         if (_added) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: CustomColors.bgColor,
+              backgroundColor: Colors.deepOrangeAccent,
               content: Text("Post Added", style: CustomTextStyle.bodyText1)));
           notifyListeners();
         } else {
